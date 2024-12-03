@@ -71,7 +71,7 @@ function App() {
       }
     }), [filter, todos])
 
-    
+
 
   return (
     <div className='w-3/4 mx-auto'>
@@ -101,9 +101,9 @@ function App() {
           />
 
         </>
-        
+
       ) : (
-        <SignIn /> 
+        <SignIn />
       )}
 
     </div>
