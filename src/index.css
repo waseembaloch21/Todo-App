@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+.taskup{
+    background-color: #3fc5f1;
+}
+
+.taskup:hover{
+    background-color: #20cfff;
+}
+
+.taskdown{
+    background-color: #f8f85c;
+}
+
+.taskdown:hover{
+    background-color: #f1f13f;
+}        
+
+
+
+
+
