@@ -3,8 +3,6 @@ import './App.css'
 import TodoInput from './components/TodoInput'
 import TodoList from './components/TodoList'
 import FilterButtons from './FilterButtons';
-import Signup from './pages/SignUp';
-import SignIn from './pages/SignIn';
 import { signOut } from 'firebase/auth';
 import { auth } from './utils/FireBase';
 
@@ -75,36 +73,25 @@ function App() {
 
   return (
     <div className='w-3/4 mx-auto'>
-      {isAuthenticated ? (
-        <>
-          <button
-            onClick={handleLogout}
-            className="text-white font-mono bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg  text-sm w-full sm:w-auto px-5 py-2.5   dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-          >
-            Logout
-          </button>
+      <h1 className="font-bold text-3xl p-4 font-serif">Todo App</h1>
 
-          <h1 className="font-bold text-3xl p-4 font-serif">Todo App</h1>
+      <TodoInput
+        value={todo}
+        onChange={(e) => setTodo(e.target.value)}
+        onClick={handleAddTodo}
+      />
 
-          <TodoInput
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-            onClick={handleAddTodo}
-          />
+      <FilterButtons filter={filter} setFilter={setFilter} />
 
-          <FilterButtons filter={filter} setFilter={setFilter} />
+      <TodoList
+        toggleTodo={handleOnToggleTodo}
+        todos={filteredTodos}
+        onDelete={handleOnDelete}
+      />
 
-          <TodoList
-            toggleTodo={handleOnToggleTodo}
-            todos={filteredTodos}
-            onDelete={handleOnDelete}
-          />
 
-        </>
 
-      ) : (
-        <SignIn />
-      )}
+
 
     </div>
   )

@@ -5,6 +5,37 @@
   text-align: center;
 }
 
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb; /* Light background */
+  color: #333; /* Text color */
+}
+
+@media (max-width: 480px) {
+  button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .todo-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .filter-buttons {
+    gap: 5px;
+  }
+}
+
+@media (min-width: 768px) {
+  .w-3\/4 {
+    max-width: 75%; /* Expand width for larger screens */
+  }
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
