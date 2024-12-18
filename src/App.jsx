@@ -72,7 +72,7 @@ function App() {
 
 
   return (
-    <div className='w-3/4 mx-auto'>
+    <div className=' container mx-auto'>
       <h1 className="font-bold text-3xl p-4 font-serif">Todo App</h1>
 
       <TodoInput
@@ -88,11 +88,6 @@ function App() {
         todos={filteredTodos}
         onDelete={handleOnDelete}
       />
-
-
-
-
-
     </div>
   )
 }
