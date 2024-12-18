@@ -69,10 +69,8 @@ function App() {
       }
     }), [filter, todos])
 
-
-
   return (
-    <div className=' container mx-auto'>
+    <div className=' image container mx-auto'>
       <h1 className="font-bold text-3xl p-4 font-serif">Todo App</h1>
 
       <TodoInput

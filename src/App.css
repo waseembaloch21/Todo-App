@@ -9,8 +9,8 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9fafb; /* Light background */
-  color: #333; /* Text color */
+  background-color: #f9fafb; 
+  color: #333; 
 }
 
 @media (max-width: 480px) {
@@ -32,8 +32,18 @@ body {
 
 @media (min-width: 768px) {
   .w-3\/4 {
-    max-width: 75%; /* Expand width for larger screens */
+    max-width: 75%; 
   }
+}
+
+.image {
+  background-image: url(./assets/BgImage.avif);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; 
+  width: 100%; 
+  padding: 20px; 
 }
 
 .logo {
