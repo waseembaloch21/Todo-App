@@ -1,32 +1,34 @@
-
-import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { AppRoutes } from "../constant/AppRoutes";
+export const AuthContext = createContext()
 
-const AuthContext = createContext();
+const AuthContextProvider = ({ children }) => {
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        if (!user) {
+            const token = Cookies.get('token')
+            if (token) getUserInfo(token)
+        }
+    }, [user])
 
-function AuthContextProvider({children}) {
- const [user, setUser] = useState({
-    isLogin : false,
-    userInfo : {},
- });
-
- const [loading, setLoading] = useState(true);
-
- function onAuthChanged(user) {
-    setUser(user);
-    if(initializing) setLoading(false);
- }
-
- useEffect(() => {
-    const subscriber = onAuthStateChanged(onAuthChanged);
-    return subscriber;
- },[])
-
-  return (   
-    <AuthContextProvider value={{user,setUser}}>
-       {loading ? "Loading........." : children}
-    </AuthContextProvider>
-  )
+    const getUserInfo = (token) => {
+        axios.get(AppRoutes.myInfo, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
+            console.log(res.data.data)
+            setUser(res.data.data)
+        })
+            .catch((err) => console.log(err))
+    }
+    return (
+        <AuthContext.Provider value={{ user, setUser }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export default AuthContextProvider;

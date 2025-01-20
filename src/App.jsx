@@ -1,91 +1,30 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {  useContext } from 'react'
 import './App.css'
-import TodoInput from './components/TodoInput'
-import TodoList from './components/TodoList'
-import FilterButtons from './FilterButtons';
-import { signOut } from 'firebase/auth';
-import { auth } from './utils/FireBase';
+
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
+import Login from './pages/logın';
+import Task from './pages/task';
 
 function App() {
-  const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState("All");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const handleAddTodo = useCallback(() => {
-    const todosApp = [...todos, {
-      todo,
-      id: Date.now(),
-      complete: false,
-    }]
-    setTodos([...todosApp]);
-    setTodo("");
-  }, [todo]);
-
-  const handleOnToggleTodo = useCallback((id) => {
-    const todosApp = [...todos]
-    const todoInd = todosApp.findIndex((data) => data.id == id)
-    todosApp[todoInd].completed = !todosApp[todoInd].completed
-    setTodos([...todosApp]);
-  },
-    [todos]
-  );
-
-  const handleLogout = useCallback(() => {
-    signOut(auth)
-    try {
-
-    } catch (err) {
-      alert(err);
-    };
-  });
-
-  const handleOnDelete = useCallback((id) => {
-    const filter = todos.filter((data) => data.id !== id);
-    setTodos([...filter])
-  }, [todos]);
-
-  const filteredTodos = useMemo(() =>
-    todos.filter((data) => {
-      if (filter == 'All') {
-        return true;
-      }
-      if (filter == 'Completed' && data.completed) {
-        return true;
-      }
-      if (filter == 'UnCompleted' && !data.completed) {
-        return true;
-      }
-    }), [filter, todos])
+  const { user } = useContext(AuthContext)
+  console.log("user=>", user)
 
   return (
-    <div className=' image container mx-auto'>
-      <h1 className="font-bold text-3xl p-4 font-serif">Todo App</h1>
+    <div className='image container mx-auto'>
+     
+      <Routes>
+      <Route path="/" element={user ? <Navigate to={'/task'} /> : <Login/>} />
+      <Route path="/task" element={!user ? <Navigate to={'/'} /> : <Task/>} />
+      </Routes>
 
-      <TodoInput
-        value={todo}
-        onChange={(e) => setTodo(e.target.value)}
-        onClick={handleAddTodo}
-      />
+      
 
-      <FilterButtons filter={filter} setFilter={setFilter} />
+      {/* <FilterButtons filter={filter} setFilter={setFilter} /> */}
 
-      <TodoList
-        toggleTodo={handleOnToggleTodo}
-        todos={filteredTodos}
-        onDelete={handleOnDelete}
-      />
+      
+      
     </div>
   )
 }
